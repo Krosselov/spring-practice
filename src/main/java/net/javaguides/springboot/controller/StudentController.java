@@ -66,7 +66,7 @@ public class StudentController {
         System.out.println(student.getId());
         System.out.println(student.getFirstName());
         System.out.println(student.getLastName());
-        return new ResponseEntity<>(student,HttpStatus.CREATED);
+        return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
     // Spring BOOT REST API that handles HTTP PUT Request - updating existing resource
