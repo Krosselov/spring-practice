@@ -1,9 +1,8 @@
 package net.javaguides.springboot.controller;
 
 import net.javaguides.springboot.bean.Student;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,5 +40,39 @@ public class StudentController {
                                        @PathVariable("first-name") String firstName,
                                        @PathVariable("last-name") String lastName) {
         return new Student(studentId, firstName, lastName);
+    }
+
+    // Spring BOOT REST API with Request Param
+    // http://localhost:8080/students/query?id=1&firstName=Vadim&lastName=Shupan
+    @GetMapping("students/query")
+    public Student studentRequestVariable(@RequestParam int id,
+                                          @RequestParam String firstName,
+                                          @RequestParam String lastName){
+        return new Student(id,firstName, lastName);
+    }
+
+    // Spring BOOT REST API that handles HTTP POST Request - creating new resource
+    // @PostMapping and @RequestBody
+    @PostMapping("students/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Student createStudent(@RequestBody Student student){
+        System.out.println(student.getId());
+        System.out.println(student.getFirstName());
+        System.out.println(student.getLastName());
+        return student;
+    }
+
+    // Spring BOOT REST API that handles HTTP PUT Request - updating existing resource
+    @PutMapping("students/{id}/update")
+    public Student updateStudent(@RequestBody Student student,@PathVariable("id") int studentId){
+        System.out.println(student.getFirstName());
+        System.out.println(student.getLastName());
+        return student;
+    }
+
+    // Spring BOOT REST API that handles HTTP DELETE Request - deleting the existing resource
+    @DeleteMapping("students/{id}/delete")
+    public String deleteStudent(@PathVariable("id") int studentId){
+        return "Student deleted successfully!";
     }
 }
